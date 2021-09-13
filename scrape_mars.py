@@ -11,6 +11,26 @@ browser = Browser('chrome', **executable_path, headless=False)
 browser.visit('https://redplanetscience.com/')
 html = browser.html
 
+def scrape():
+    browser = Browser('chrome', **executable_path, headless=False)
+    title, parapraph = news(browser)
+    data = {
+        'news_title': title,
+        'paragraph': parapraph
+    }
+
+
+
+    return data
+
+
+def news(browser):
+    browser.visit('https://redplanetscience.com/')
+    title = browser.find_by_css('div.content_title').text
+    paragraph = browser.find_by_css('div.article_teaser_body').text
+    return title, paragraph
+
+
 
 soup = bs(html, 'html.parser')
 # Retrieve all elements that contain book information
@@ -55,8 +75,7 @@ print(cleanpics)
 
 
 # %%
-df = pd.read_html('https://galaxyfacts-mars.com/') 
-df[0]
+df = pd.read_html('https://galaxyfacts-mars.com/')[0].to_html() 
 # df[1]
 
 
@@ -91,19 +110,3 @@ for counter in range(4):
 
 print(hemisphere_image_urls)
 
-
-# %%
-conn = 'mongodb://localhost:27017'
-client = pymongo.MongoClient(conn)
-
-for counter in range(4):
-    db = client.Mars_db
-    collection = db.items
-    collection.insert_one(hemisphere_image_urls[counter])
-
-
-
-listings = db.items.find()
-
-for listing in listings:
-    print(listing)

@@ -4,7 +4,6 @@ import pymongo
 from bs4 import BeautifulSoup as bs
 import os
 import requests
-import pymongo
 import pandas as pd
 from webdriver_manager.chrome import ChromeDriverManager
 from splinter import Browser
@@ -21,10 +20,10 @@ client = pymongo.MongoClient(conn)
 
 db = client.Mars_db
 
-listings = db.items.find()
+# listings = db.items.find()
 
-for listing in listings:
-    print(listing)
+# for listing in listings:
+#     print(listing)
 
 # Or set inline
 # mongo = PyMongo(app, uri="mongodb://localhost:27017/phone_app")
@@ -33,7 +32,7 @@ for listing in listings:
 @app.route("/")
 def index():
     listings = db.items.find_one()
-    print(listings)
+    # print(listings)
     return render_template("index.html", listings=listings)
 
 @app.route("/scrape")
@@ -42,7 +41,7 @@ def scraper():
     listings = db.items.find_one()
     title = scrape_mars.cleantitles
     print(title)
-    # listings.update({}, title, upsert=True)
+    listings.update({}, title, upsert=True)
     return render_template("Clean.html", title=title, listings=listings)
 
     
