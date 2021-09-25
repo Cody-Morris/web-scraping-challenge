@@ -17,10 +17,11 @@
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape new data</a></p>
     </div>
 
-    <!-- Phone Listings -->
-    <div class="row" id="craiglist-listings">
+    <!-- Mar's Listings -->
+    <div class="row">
       <div class="col-md-12" >
-        <h4 class="heading">{{listings.Titles}} {{listings.img_url}}</h4>
+        <h4 class="heading">{{listings.Titles}} {{listings.img_url}}{{listings.paragraph}}</h4>
+        {{listings.table|safe}}
         <!-- {{title}} -->
       </div>
     </div>
